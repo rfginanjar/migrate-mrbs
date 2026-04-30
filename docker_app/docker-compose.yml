@@ -5,7 +5,7 @@ services:
             context: ..
             dockerfile: docker_app/php/Dockerfile
         ports: 
-            - "8080:80"
+            - "8091:80"
         volumes:
             - ../web:/var/www/html/
             - ./php/config.inc.php:/var/www/html/config.inc.php
@@ -16,13 +16,17 @@ services:
     db:
         image: mysql:8.0
         ports: 
-            - "3306:3306"
+            - "3307:3306"
         command: --default-authentication-plugin=mysql_native_password
         environment:
             MYSQL_DATABASE: mrbs 
             MYSQL_USER: mrbs
             MYSQL_PASSWORD: mrbs
             MYSQL_ROOT_PASSWORD: mrbs
+        ulimits:
+            nofile:
+              soft: 262144
+              hard: 262144
         volumes:
             - ../tables.my.sql:/docker-entrypoint-initdb.d/010-tables.sql
             - persistent:/var/lib/mysql
