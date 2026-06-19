@@ -1244,7 +1244,7 @@ function adjustSlotSelectors()
     var warningEl = $('#duration_warning');
     if (durationSecs > 2 * 3600)
     {
-      warningEl.show();
+      warningEl.css('display', 'block');
     }
     else
     {
