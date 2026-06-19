@@ -404,22 +404,6 @@ function get_field_end_time(int $value, bool $disabled=false) : FieldDiv
                              'class' => 'error'));
   $field->addControlElement($span);
 
-  // Static caption: maximum booking duration (subtle hint below time selectors)
-  $caption = new ElementSpan();
-  $caption->setAttributes(array('id'    => 'max_duration_notice',
-                                'class' => 'help',
-                                'style' => 'display:block; margin-top:0.4em; font-size:0.85em; color:#666'));
-  $caption->setText(get_vocab('max_booking_2h_notice'));
-  $field->addControlElement($caption);
-
-  // Dynamic warning shown when duration exceeds 2 hours (bold, block-level)
-  $warning = new ElementSpan();
-  $warning->setAttributes(array('id'    => 'duration_warning',
-                                'class' => 'error',
-                                'style' => 'display:none; margin-top:0.3em; font-size:0.9em; font-weight:bold'));
-  $warning->setText(get_vocab('booking_exceeds_2h'));
-  $field->addControlElement($warning);
-
   return $field;
 }
 
@@ -1780,6 +1764,22 @@ foreach ($edit_entry_field_order as $key)
 
     case 'end_time':
       $fieldset->addElement(get_field_end_time($end_time));
+      // Booking duration notices — rendered as a separate block below the time selectors
+      $duration_notices = new ElementDiv();
+      $duration_notices->setAttributes(array('id' => 'duration_notices',
+                                             'style' => 'padding: 0.3em 0 0.5em 0; margin-left: 0'));
+      $caption = new ElementSpan();
+      $caption->setAttributes(array('id' => 'max_duration_notice',
+                                    'style' => 'display:block; font-size:0.85em; color:#888'));
+      $caption->setText(get_vocab('max_booking_2h_notice'));
+      $duration_notices->addElement($caption);
+      $warning = new ElementSpan();
+      $warning->setAttributes(array('id' => 'duration_warning',
+                                    'class' => 'error',
+                                    'style' => 'display:none; margin-top:0.3em; font-size:0.9em; font-weight:bold'));
+      $warning->setText(get_vocab('booking_exceeds_2h'));
+      $duration_notices->addElement($warning);
+      $fieldset->addElement($duration_notices);
       break;
 
     case 'room_id':
