@@ -11,3 +11,10 @@ web/config.inc.php
 /hg-code.iml
 /nbproject
 /.vs
+.stratvibe/
+genealogy/
+.substrate/
+spec/
+tasks/
+snippets/
+atomic/

@@ -707,3 +707,7 @@ $vocab["browser_not_supported"] = "Unfortunately your browser isn't supported by
                                   "recent version, or else use another browser.";
 $vocab["back"]               = "Back";
 
+// Booking duration limit
+$vocab["max_booking_2h_notice"] = "Maximum booking duration: 2 hours";
+$vocab["booking_exceeds_2h"]    = "Warning: your booking exceeds the 2-hour limit";
+

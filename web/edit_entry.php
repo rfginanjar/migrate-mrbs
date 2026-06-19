@@ -1764,6 +1764,22 @@ foreach ($edit_entry_field_order as $key)
 
     case 'end_time':
       $fieldset->addElement(get_field_end_time($end_time));
+      // Booking duration notices — use FieldDiv for proper label+control alignment
+      $notice_field = new \MRBS\Form\FieldDiv();
+      $notice_field->setLabel('')
+                   ->setAttribute('id', 'duration_notices');
+      $caption = new ElementSpan();
+      $caption->setAttributes(array('id' => 'max_duration_notice',
+                                    'style' => 'display:block; clear:both; float:none; font-size:0.85em; color:#888; font-style:italic; padding-top:0.3em'));
+      $caption->setText(get_vocab('max_booking_2h_notice'));
+      $notice_field->addControlElement($caption);
+      $warning = new ElementSpan();
+      $warning->setAttributes(array('id' => 'duration_warning',
+                                    'class' => 'error',
+                                    'style' => 'display:none; clear:both; float:none; margin-top:0.3em; font-size:0.9em; font-weight:bold'));
+      $warning->setText(get_vocab('booking_exceeds_2h'));
+      $notice_field->addControlElement($warning);
+      $fieldset->addElement($notice_field);
       break;
 
     case 'room_id':

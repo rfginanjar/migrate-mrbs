@@ -480,6 +480,21 @@ function validate(form)
     return false;
   }
 
+  <?php // Front-end lock: restrict bookings to a maximum of 2 hours ?>
+  if (!areaConfig('enable_periods'))
+  {
+    var maxBookingSeconds = 2 * 3600;
+    var startSecs = parseInt(form.find('#start_seconds').val(), 10);
+    var endSecs = parseInt(form.find('#end_seconds').val(), 10);
+    var totalDuration = (endSecs - startSecs) + (dateDiff * <?php echo SECONDS_PER_DAY ?>);
+    if (totalDuration > maxBookingSeconds)
+    {
+      window.alert("Booking cannot exceed 2 hours. Please shorten your reservation.");
+      form.find('input[type=submit]').prop('disabled', false);
+      return false;
+    }
+  }
+
   <?php // Repeat checks ?>
   var repType = form.find('input:radio[name=rep_type]:checked').val();
   if ((repType !== undefined) && (parseInt(repType, 10) !== <?php echo RepeatRule::NONE ?>))
@@ -1221,6 +1236,21 @@ function adjustSlotSelectors()
   endSelect.data('current', endValue);
 
   adjustWidth(startSelect, endSelect);
+
+  <?php // Dynamic 2-hour warning: show/hide based on current duration ?>
+  if (!areaConfig('enable_periods'))
+  {
+    var durationSecs = endValue - parseInt(startSelect.val(), 10) + (getDateDifference() * <?php echo SECONDS_PER_DAY ?>);
+    var warningEl = $('#duration_warning');
+    if (durationSecs > 2 * 3600)
+    {
+      warningEl.css('display', 'block');
+    }
+    else
+    {
+      warningEl.hide();
+    }
+  }
 
 } <?php // function adjustSlotSelectors() ?>
 
