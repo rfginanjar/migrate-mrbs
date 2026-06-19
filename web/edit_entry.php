@@ -1764,27 +1764,22 @@ foreach ($edit_entry_field_order as $key)
 
     case 'end_time':
       $fieldset->addElement(get_field_end_time($end_time));
-      // Booking duration notices — mimics table-row structure for alignment
-      $notice_row = new ElementDiv();
-      $notice_row->setAttribute('id', 'duration_notices');
-      $notice_label = new ElementSpan();
-      $notice_label->setAttribute('class', 'none');
-      $notice_row->addElement($notice_label);
-      $notice_content = new ElementDiv();
-      $notice_content->setAttribute('style', 'padding: 0.2em 0 0.4em 0');
+      // Booking duration notices — use FieldDiv for proper label+control alignment
+      $notice_field = new \MRBS\Form\FieldDiv();
+      $notice_field->setLabel('')
+                   ->setAttribute('id', 'duration_notices');
       $caption = new ElementSpan();
       $caption->setAttributes(array('id' => 'max_duration_notice',
                                     'style' => 'display:block; font-size:0.85em; color:#888; font-style:italic'));
       $caption->setText(get_vocab('max_booking_2h_notice'));
-      $notice_content->addElement($caption);
+      $notice_field->addControlElement($caption);
       $warning = new ElementSpan();
       $warning->setAttributes(array('id' => 'duration_warning',
                                     'class' => 'error',
                                     'style' => 'display:none; margin-top:0.3em; font-size:0.9em; font-weight:bold'));
       $warning->setText(get_vocab('booking_exceeds_2h'));
-      $notice_content->addElement($warning);
-      $notice_row->addElement($notice_content);
-      $fieldset->addElement($notice_row);
+      $notice_field->addControlElement($warning);
+      $fieldset->addElement($notice_field);
       break;
 
     case 'room_id':
