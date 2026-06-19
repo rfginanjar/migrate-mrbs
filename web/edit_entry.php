@@ -404,6 +404,21 @@ function get_field_end_time(int $value, bool $disabled=false) : FieldDiv
                              'class' => 'error'));
   $field->addControlElement($span);
 
+  // Static caption: maximum booking duration
+  $caption = new ElementSpan();
+  $caption->setAttributes(array('id'    => 'max_duration_notice',
+                                'class' => 'help'));
+  $caption->setText(get_vocab('max_booking_2h_notice'));
+  $field->addControlElement($caption);
+
+  // Dynamic warning shown when duration exceeds 2 hours
+  $warning = new ElementSpan();
+  $warning->setAttributes(array('id'    => 'duration_warning',
+                                'class' => 'error',
+                                'style' => 'display:none'));
+  $warning->setText(get_vocab('booking_exceeds_2h'));
+  $field->addControlElement($warning);
+
   return $field;
 }
 

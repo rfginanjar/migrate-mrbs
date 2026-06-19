@@ -1237,6 +1237,21 @@ function adjustSlotSelectors()
 
   adjustWidth(startSelect, endSelect);
 
+  <?php // Dynamic 2-hour warning: show/hide based on current duration ?>
+  if (!areaConfig('enable_periods'))
+  {
+    var durationSecs = endValue - parseInt(startSelect.val(), 10) + (getDateDifference() * <?php echo SECONDS_PER_DAY ?>);
+    var warningEl = $('#duration_warning');
+    if (durationSecs > 2 * 3600)
+    {
+      warningEl.show();
+    }
+    else
+    {
+      warningEl.hide();
+    }
+  }
+
 } <?php // function adjustSlotSelectors() ?>
 
 
